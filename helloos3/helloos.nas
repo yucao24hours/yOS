@@ -51,7 +51,7 @@ fin:
 
 msg:
 		DB		0x0a, 0x0a		; ‰üs‚ğ2‚Â
-		DB		"hello, world"
+		DB		"Good night, world"
 		DB		0x0a			; ‰üs
 		DB		0
 
