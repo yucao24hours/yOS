@@ -9,3 +9,15 @@ helloos.img : ipl.bin Makefile
 # ƒRƒ}ƒ“ƒh
 img :
 	../z_tools/make.exe -r helloos.img
+
+asm :
+	../z_tools/make.exe -r ipl.bin
+
+run : 
+	../z_tools/make.exe img
+	copy helloos.img ..\z_tools\qemu\fdimage0.bin
+	../z_tools/make.exe -C ../z_tools/qemu
+
+install :
+	../z_tools/make.exe img
+	../z_tools/imgtol.com w a: helloos.img
