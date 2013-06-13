@@ -1,0 +1,49 @@
+text size :   2364(0x0093C)
+data size :   4208(0x01070)
+bss  size :      0(0x00000)
+
+0x00000000 : (.text)
+0x00000024 : (.text)
+0x00000024 : _HariMain
+0x000000DF : _init_palette
+0x000000F2 : _set_palette
+0x0000017A : _boxfill8
+0x000001CB : _init_screen
+0x00000356 : _putfont8
+0x000003DC : _putfonts8_asc
+0x0000042B : _io_hlt
+0x0000042B : (.text)
+0x0000042D : _io_cli
+0x0000042F : _io_sti
+0x00000431 : _io_stihlt
+0x00000434 : _io_in8
+0x0000043F : _io_in16
+0x0000044B : _io_in32
+0x00000451 : _io_out8
+0x0000045B : _io_out16
+0x00000466 : _io_out32
+0x00000470 : _io_load_eflags
+0x00000473 : _io_store_eflags
+0x0000047A : (.text)
+0x0000047A : _HariStartup
+0x00000483 : _sprintf
+0x00000483 : (.text)
+0x00000497 : (.text)
+0x000004D3 : _strtoul0
+0x000005A6 : (.text)
+0x000005CE : _vsprintf
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00000000 : (.data)
+0x00310000 : (.data)
+0x00310050 : _hankaku
+0x00310050 : (.data)
+0x00311050 : (.data)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
+0x00000000 : (.bss)
