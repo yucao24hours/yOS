@@ -1,0 +1,77 @@
+	.file	"bootpack.c"
+	.data
+LC0:
+	.ascii "(%d, %d)\0"
+	.text
+	.balign 2
+.globl _HariMain
+	.def	_HariMain;	.scl	2;	.type	32;	.endef
+_HariMain:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	pushl	%esi
+	pushl	%ebx
+	leal	-316(%ebp), %ebx
+	subl	$304, %esp
+	call	_init_gdtidt
+	call	_init_palette
+	movswl	4086,%eax
+	pushl	%eax
+	movswl	4084,%eax
+	pushl	%eax
+	pushl	4088
+	call	_init_screen8
+	movl	$2, %ecx
+	movswl	4084,%eax
+	leal	-16(%eax), %edx
+	movl	%edx, %eax
+	cltd
+	idivl	%ecx
+	movswl	4086,%edx
+	subl	$44, %edx
+	movl	%eax, %edi
+	movl	%edx, %eax
+	pushl	$14
+	cltd
+	idivl	%ecx
+	pushl	%ebx
+	movl	%eax, %esi
+	call	_init_mouse_cursor8
+	pushl	$16
+	pushl	%ebx
+	leal	-60(%ebp), %ebx
+	pushl	%esi
+	pushl	%edi
+	pushl	$16
+	pushl	$16
+	movswl	4084,%eax
+	pushl	%eax
+	pushl	4088
+	call	_putblock8_8
+	addl	$52, %esp
+	pushl	%esi
+	pushl	%edi
+	pushl	$LC0
+	pushl	%ebx
+	call	_sprintf
+	pushl	%ebx
+	pushl	$7
+	pushl	$0
+	pushl	$0
+	movswl	4084,%eax
+	pushl	%eax
+	pushl	4088
+	call	_putfonts8_asc
+	addl	$40, %esp
+L2:
+	call	_io_hlt
+	jmp	L2
+	.def	_io_hlt;	.scl	2;	.type	32;	.endef
+	.def	_putfonts8_asc;	.scl	2;	.type	32;	.endef
+	.def	_sprintf;	.scl	2;	.type	32;	.endef
+	.def	_putblock8_8;	.scl	2;	.type	32;	.endef
+	.def	_init_mouse_cursor8;	.scl	2;	.type	32;	.endef
+	.def	_init_screen8;	.scl	2;	.type	32;	.endef
+	.def	_init_palette;	.scl	2;	.type	32;	.endef
+	.def	_init_gdtidt;	.scl	2;	.type	32;	.endef

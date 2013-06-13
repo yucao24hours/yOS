@@ -1,0 +1,116 @@
+	.file	"dsctbl.c"
+	.text
+	.balign 2
+.globl _init_gdtidt
+	.def	_init_gdtidt;	.scl	2;	.type	32;	.endef
+_init_gdtidt:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	$2555904, %esi
+	movl	$8191, %ebx
+L6:
+	pushl	$0
+	pushl	$0
+	pushl	$0
+	pushl	%esi
+	addl	$8, %esi
+	call	_set_segmdesc
+	addl	$16, %esp
+	decl	%ebx
+	jns	L6
+	pushl	$16530
+	movl	$2553856, %esi
+	pushl	$0
+	movl	$255, %ebx
+	pushl	$-1
+	pushl	$2555912
+	call	_set_segmdesc
+	pushl	$16538
+	pushl	$2621440
+	pushl	$524287
+	pushl	$2555920
+	call	_set_segmdesc
+	addl	$32, %esp
+	pushl	$2555904
+	pushl	$65535
+	call	_load_gdtr
+	popl	%eax
+	popl	%edx
+L11:
+	pushl	$0
+	pushl	$0
+	pushl	$0
+	pushl	%esi
+	addl	$8, %esi
+	call	_set_gatedesc
+	addl	$16, %esp
+	decl	%ebx
+	jns	L11
+	pushl	$2553856
+	pushl	$2047
+	call	_load_idtr
+	leal	-8(%ebp), %esp
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.balign 2
+.globl _set_segmdesc
+	.def	_set_segmdesc;	.scl	2;	.type	32;	.endef
+_set_segmdesc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	12(%ebp), %edx
+	movl	16(%ebp), %ecx
+	movl	8(%ebp), %ebx
+	movl	20(%ebp), %eax
+	cmpl	$1048575, %edx
+	jbe	L17
+	shrl	$12, %edx
+	orl	$32768, %eax
+L17:
+	movw	%dx, (%ebx)
+	movb	%al, 5(%ebx)
+	shrl	$16, %edx
+	sarl	$8, %eax
+	andl	$15, %edx
+	movw	%cx, 2(%ebx)
+	andl	$-16, %eax
+	sarl	$16, %ecx
+	orl	%eax, %edx
+	movb	%cl, 4(%ebx)
+	movb	%dl, 6(%ebx)
+	sarl	$8, %ecx
+	movb	%cl, 7(%ebx)
+	popl	%ebx
+	popl	%ebp
+	ret
+	.balign 2
+.globl _set_gatedesc
+	.def	_set_gatedesc;	.scl	2;	.type	32;	.endef
+_set_gatedesc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %edx
+	movl	16(%ebp), %eax
+	movl	20(%ebp), %ebx
+	movl	12(%ebp), %ecx
+	movw	%ax, 2(%edx)
+	movb	%bl, 5(%edx)
+	movw	%cx, (%edx)
+	movl	%ebx, %eax
+	sarl	$8, %eax
+	sarl	$16, %ecx
+	movb	%al, 4(%edx)
+	movw	%cx, 6(%edx)
+	popl	%ebx
+	popl	%ebp
+	ret
+	.def	_load_idtr;	.scl	2;	.type	32;	.endef
+	.def	_set_gatedesc;	.scl	2;	.type	32;	.endef
+	.def	_load_gdtr;	.scl	2;	.type	32;	.endef
+	.def	_set_segmdesc;	.scl	2;	.type	32;	.endef
